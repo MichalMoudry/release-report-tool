@@ -1,0 +1,2 @@
+(library
+ (name release_report_cli))
