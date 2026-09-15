@@ -1,0 +1,30 @@
+(lang dune 3.24)
+
+(name rrt)
+
+(generate_opam_files true)
+
+(source
+ (github MichalMoudry/release-report-tool))
+
+(authors "Michal Moudrý <author@example.com>")
+
+(maintainers "Michal Moudrý <maintainer@example.com>")
+
+(license Apache-2.0)
+
+(documentation https://github.com/MichalMoudry/release-report-tool/wiki)
+
+(package
+ (name rrt)
+ (synopsis "A tool used for generating a report of project's releases")
+ (description "A command-line tool that can be used to generate a report (in various formats) of project's releases")
+ (depends
+  (ocaml
+    (>= 5.4.1))
+  (cmdliner
+    (>= 2.1.1)))
+ (tags
+  ("add topics" "to describe" your project)))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

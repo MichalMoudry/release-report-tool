@@ -1,4 +1,0 @@
-(executable
- (public_name release_report_cli)
- (name main)
- (libraries release_report_cli))
