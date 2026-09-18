@@ -21,9 +21,7 @@
  (description "A command-line tool that can be used to generate a report (in various formats) of project's releases")
  (depends
   (ocaml
-    (>= 5.4.1))
-  (cmdliner
-    (>= 2.1.1)))
+    (>= 5.4.1)))
  (tags
   ("add topics" "to describe" your project)))
 
