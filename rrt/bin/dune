@@ -1,0 +1,4 @@
+(executable
+ (public_name rrt)
+ (name main)
+ (libraries rrt yojson))
