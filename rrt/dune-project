@@ -21,7 +21,11 @@
  (description "A command-line tool that can be used to generate a report (in various formats) of project's releases")
  (depends
   (ocaml
-    (>= 5.4.1)))
+    (>= 5.4.1))
+  (yojson (>= 3.0.0))
+  (ocaml-lsp-server :with-dev-setup)
+  (ocamlformat :with-dev-setup)
+  (utop :with-dev-setup))
  (tags
   ("add topics" "to describe" your project)))
 
