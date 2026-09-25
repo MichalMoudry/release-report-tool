@@ -1,7 +1,9 @@
-(** A structure containing tool's configuration data *)
 type config = {
-  url: string;
-  access_token: string option
+  url : string;
+  access_token : string option;
+  environment : string option;
+  start_date : string;
+  number_of_months : int
 }
 
 let read_file chan =
@@ -18,7 +20,13 @@ let get_config path =
   let read_config_file () = Yojson.Safe.from_channel input_chan in
   let content () = Fun.protect ~finally read_config_file in
   Format.printf "Parsed to %a" Yojson.Safe.pp (content ());
-  { url = ""; access_token = None }
+  {
+    url = "";
+    access_token = None;
+    environment = Some "main";
+    start_date = "";
+    number_of_months = 12
+  }
 
 let print_config cfg =
   print_endline "== Configuration";

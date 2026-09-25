@@ -1,10 +1,11 @@
+(** A path to a config file *)
 let config_path = ref ""
 
 let set_config_path value = match value with
-| "" -> failwith "Missing config path"
-| str -> config_path := str
+  | "" -> failwith "Missing config path"
+  | str -> config_path := str
 
-(**A list of tool's arguments*)
+(** A list of tool's arguments *)
 let spec_list = [
   (
     "-c",
