@@ -31,5 +31,8 @@ let get_config path =
 let print_config cfg =
   print_endline "== Configuration";
   print_endline ("🌐 URL: " ^ cfg.url);
-  print_endline ("👋 Is access token set:");
+  print_endline (
+    "👋 Is access token set: "
+    ^ (Option.is_some cfg.access_token |> string_of_bool)
+  );
   cfg
