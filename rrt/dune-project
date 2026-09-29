@@ -1,15 +1,18 @@
 (lang dune 3.24)
+;; dune build @opam
+;; dune promote
 
 (name rrt)
+(version 0.0.1)
 
 (generate_opam_files true)
 
 (source
  (github MichalMoudry/release-report-tool))
 
-(authors "Michal Moudrý <author@example.com>")
+(authors "Michal Moudrý <7jdgegf37@mozmail.com>")
 
-(maintainers "Michal Moudrý <maintainer@example.com>")
+(maintainers "Michal Moudrý <7jdgegf37@mozmail.com>")
 
 (license Apache-2.0)
 
@@ -27,6 +30,6 @@
   (ocamlformat :with-dev-setup)
   (utop :with-dev-setup))
  (tags
-  ("CLI" "to describe" your project)))
+  ("command-line", "release report", "compliance")))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

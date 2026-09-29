@@ -7,6 +7,7 @@ type config = {
   number_of_months : int
 }
 
-(** Retrieves configuration information from a file *)
+(** Retrieves configuration information from a file. *)
 val get_config : string -> config
-val print_config : config -> config
+(** Pretty prints a recived config object, and returns it back. *)
+val pp_config : config -> config

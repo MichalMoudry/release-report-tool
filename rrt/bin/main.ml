@@ -24,7 +24,7 @@ let generate_report cfg_path format =
     Error "No config path has been provided"
   else
     try
-      let _ = Rrt.Config.get_config cfg_path |> Rrt.Config.print_config in
+      let _ = Rrt.Config.get_config cfg_path |> Rrt.Config.pp_config in
       Ok "Release report was generated successfully!"
     with e -> Error ("failed to generate the report: " ^ Printexc.to_string e)
 
