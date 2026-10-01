@@ -26,6 +26,7 @@
   (ocaml
     (>= 5.4.1))
   (yojson (>= 3.0.0))
+  (alcotest :with-test)
   (ocaml-lsp-server :with-dev-setup)
   (ocamlformat :with-dev-setup)
   (utop :with-dev-setup))

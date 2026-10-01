@@ -7,7 +7,7 @@ description:
 maintainer: ["Michal Moudrý <7jdgegf37@mozmail.com>"]
 authors: ["Michal Moudrý <7jdgegf37@mozmail.com>"]
 license: "Apache-2.0"
-tags: ["command-line" "," "release report"]
+tags: ["command-line" "," "release report" "," "compliance"]
 homepage: "https://github.com/MichalMoudry/release-report-tool"
 doc: "https://github.com/MichalMoudry/release-report-tool/wiki"
 bug-reports: "https://github.com/MichalMoudry/release-report-tool/issues"
@@ -15,6 +15,7 @@ depends: [
   "dune" {>= "3.24"}
   "ocaml" {>= "5.4.1"}
   "yojson" {>= "3.0.0"}
+  "alcotest" {with-test}
   "ocaml-lsp-server" {with-dev-setup}
   "ocamlformat" {with-dev-setup}
   "utop" {with-dev-setup}
