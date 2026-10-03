@@ -1,3 +1,8 @@
+(**
+A module containing types and functions for handling this tool's configuration.
+@author Michal Moudrý
+*)
+
 (** A structure containing tool's configuration data *)
 type config = {
   url : string;

@@ -19,24 +19,17 @@ let spec_list = [
 (** A function that will be called when the tool get anonymous arguments *)
 let anon_func value = print_endline ("Received invalid input: " ^ value)
 
-let read_file chan =
-  let rec loop acc =
-    match try Some (input_line chan) with End_of_file -> None with
-    | Some line -> loop (line :: acc)
-    | None -> [] in
-  loop []
-
+(**
+A function for generating a release report based on a provided configuration
+and a format.
+*)
 let generate_report config_path format =
   if config_path = "" then
     Error "No config path has been provided"
   else
     try
-      (*let _ = Rrt.Config.get_config cfg_path |> Rrt.Config.pp_config in*)
-      let chan = open_in config_path in
-      let finally () = close_in chan in
-      let read_config () = read_file chan in
-      let config = Fun.protect ~finally read_config |> List.fold_left (^) "" in
-      let cfg = Yojson.Safe.from_string config in
+      let config_content = Rrt.File.read config_path in
+      List.iter print_endline config_content;
       Ok "Release report was generated successfully!"
     with e -> Error ("failed to generate the report: " ^ Printexc.to_string e)
 

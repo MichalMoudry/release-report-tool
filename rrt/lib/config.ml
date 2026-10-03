@@ -19,12 +19,7 @@ let new_config json =
   }
 
 (** Retrieves configuration information from a file. *)
-let get_config path =
-  let input_chan = open_in path in
-  let finally () = close_in input_chan in
-  let read_config_file () = Yojson.Safe.from_channel input_chan in
-  let json = Fun.protect ~finally read_config_file in
-  new_config json
+let get_config str = Yojson.Safe.from_string str |> new_config
 
 (** Pretty prints a recived config object, and returns it back. *)
 let pp_config cfg =
