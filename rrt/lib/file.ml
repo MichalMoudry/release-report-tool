@@ -1,4 +1,9 @@
-(** Reads all lines from an input channel. @returns *)
+(**
+Reads all lines from an input channel.
+@author Michal Moudrý
+@param channel The input channel that should be read.
+@returns A list of lines from the input channel.
+*)
 let read_all_lines channel =
   let rec loop acc =
     let line = try Some (input_line channel) with End_of_file -> None in

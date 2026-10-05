@@ -28,8 +28,11 @@ let generate_report config_path format =
     Error "No config path has been provided"
   else
     try
-      let config_content = Rrt.File.read config_path in
-      List.iter print_endline config_content;
+      let config =
+        Rrt.File.read config_path
+        |> List.fold_left (^) ""
+        |> Rrt.Config.get_config in
+      Rrt.Config.pp_config config;
       Ok "Release report was generated successfully!"
     with e -> Error ("failed to generate the report: " ^ Printexc.to_string e)
 

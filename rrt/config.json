@@ -1,8 +1,8 @@
 {
     "url": "https://github.com/MichalMoudry/release-report-tool",
     "accessToken": "",
-    "environment": "",
-    "startDate": "",
-    "numberOfMonths": 0,
+    "environment": "main",
+    "startDate": "2026-10-6",
+    "numberOfMonths": 12,
     "additionalSources": []
 }
