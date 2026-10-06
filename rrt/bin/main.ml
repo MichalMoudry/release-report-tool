@@ -34,7 +34,7 @@ let generate_report config_path format =
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
       Ok "Release report was generated successfully!"
-    with e -> Error ("failed to generate the report: " ^ Printexc.to_string e)
+    with e -> Error ("failed to generate the report -> " ^ Printexc.to_string e)
 
 let () =
   let usage_msg = "rrt -c <config> -f [Console|HTML]" in

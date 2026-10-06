@@ -17,7 +17,7 @@ Validates a config field that should not be empty.
 let validate_member fieldName opt =
   match opt with
   | Some value -> value
-  | None -> raise (Errors.Invalid_config_field ("'" ^ fieldName ^ "' is empty"))
+  | None -> failwith ("'" ^ fieldName ^ "' is empty")
 
 (** Function for transforming a JSON object to an internal representation. *)
 let new_config json =
@@ -44,8 +44,7 @@ let pp_config cfg = Format.printf {|Configuration = [ @[
   Is access token set = %b,
   Environment         = %s,
   Start date          = %s,
-  Number of months    = %i,
-  Additional sources  = [] @]
+  Number of months    = %i @]
 ]|}
   cfg.url
   (Option.is_some cfg.access_token)

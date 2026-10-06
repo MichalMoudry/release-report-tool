@@ -3,6 +3,5 @@
     "accessToken": "",
     "environment": "main",
     "startDate": "2026-10-6",
-    "numberOfMonths": 12,
-    "additionalSources": []
+    "numberOfMonths": 12
 }

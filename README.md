@@ -6,7 +6,14 @@ rrt -c <config> -f [Console|HTML]
 ```
 
 ## Configuration file description
-
+This section contains details fields used within the configuration file.
+| Field          | Description                                                                               |
+|----------------|-------------------------------------------------------------------------------------------|
+| url            | A link to a repository that the release report should be generated for.                   |
+| accessToken    | A token used for accessing an API that provides release information about the repository. |
+| environment    |  |
+| startDate      |  |
+| numberOfMonths |  |
 ### Config file example
 ```json
 {
@@ -14,7 +21,6 @@ rrt -c <config> -f [Console|HTML]
     "accessToken": "",
     "environment": "",
     "startDate": "",
-    "numberOfMonths": 0,
-    "additionalSources": []
+    "numberOfMonths": 0
 }
 ```
