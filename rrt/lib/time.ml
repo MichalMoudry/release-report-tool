@@ -14,14 +14,25 @@ type dateonly = {
 (**
 Parses a string, and then tries to create a dateonly record out of it.
 @param str The string that should be parsed into the dateonly record
-@return
+@return A Some of dateonly record if it's correctly parsed; otherwise, None.
 @author Michal Moudrý
 *)
 let new_dateonly str =
-  if str = "" then
-    { year = 0; month = 0; day = 0 }
+  if Option.is_none str then
+    None
   else
-    { year = 2026; month = 10; day = 6 }
+    let str_parts = String.split_on_char '-' (Option.get str) in
+    if List.length str_parts <> 3 then
+      None
+    else
+      let year_str = int_of_string_opt (List.nth str_parts 0) in
+      let month_str = int_of_string_opt (List.nth str_parts 1) in
+      let day_str = int_of_string_opt (List.nth str_parts 2) in
+      Some {
+        year = (match year_str with Some value -> value | None -> 0);
+        month = (match month_str with Some value -> value | None -> 0);
+        day = (match day_str with Some value -> value | None -> 0)
+      }
 
 (**
 Effectively a `.ToString()` method for the dateonly record.
