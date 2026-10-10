@@ -35,7 +35,10 @@ let generate_report config_path format =
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
       let elapsed = Rrt.Stopwatch.stop sw in
-      Ok (Format.sprintf "Release report was generated successfully! Took: %fs" elapsed)
+      Ok (
+        Format.sprintf "Release report was generated successfully! Took: %.0fs"
+        elapsed
+      )
     with e -> Error ("failed to generate the report -> " ^ Printexc.to_string e)
 
 let () =
