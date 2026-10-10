@@ -28,12 +28,17 @@ let generate_report config_path format =
     Error "No config path has been provided"
   else
     try
+      let sw = Rrt.Stopwatch.start_new () in
       let config =
         Rrt.File.read config_path
         |> List.fold_left (^) ""
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
-      Ok "Release report was generated successfully!"
+      let elapsed = Rrt.Stopwatch.stop sw in
+      Ok (
+        Format.sprintf "Release report was generated successfully! Took: %.0fs"
+        elapsed
+      )
     with e -> Error ("failed to generate the report -> " ^ Printexc.to_string e)
 
 let () =

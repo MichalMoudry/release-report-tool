@@ -12,12 +12,6 @@ let read_all_lines channel =
     | None -> acc in
   loop [] |> List.rev
 
-(**
-Function for reading contents of a file from a specified path.
-@author Michal Moudrý
-@param path A path to a file
-@return A list of lines contained withing the specified file.
-*)
 let read path =
   let channel = open_in path in
   let finally () = close_in channel in
