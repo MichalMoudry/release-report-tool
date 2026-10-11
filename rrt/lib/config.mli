@@ -3,6 +3,12 @@ A module containing types and functions for handling this tool's configuration.
 @author Michal Moudrý
 *)
 
+(**
+An enum containing supported repositories for the release report.
+@author Michal Moudrý
+*)
+type repository = GitHub | AzDevOps
+
 (** A structure containing tool's configuration data @author Michal Moudrý *)
 type config = {
   url : string;
