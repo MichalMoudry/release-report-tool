@@ -13,7 +13,7 @@ doc: "https://github.com/MichalMoudry/release-report-tool/wiki"
 bug-reports: "https://github.com/MichalMoudry/release-report-tool/issues"
 depends: [
   "dune" {>= "3.24"}
-  "ocaml" {>= "5.4.1"}
+  "ocaml" {>= "5.5.1"}
   "yojson" {>= "3.0.0"}
   "alcotest" {with-test}
   "ocaml-lsp-server" {with-dev-setup}
