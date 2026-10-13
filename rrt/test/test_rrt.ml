@@ -3,6 +3,16 @@ let test_get_config () =
   let config = Rrt.Config.get_config json in
   Alcotest.(check string) "is URL equal" "http://localhost" config.url
 
+(**
+A test case that asserts that the {!Rrt.Config.get_repository_type} correctly
+converts strings to an internal repository representation.
+@author Michal Moudrý
+*)
+let test_get_repository_type url expected () =
+  let repository_type = Rrt.Config.get_repository_type url in
+  let msg = "URL " ^ url ^ " couldn't be processed to a correct type" in
+  Alcotest.(check bool) msg true (expected = repository_type)
+
 let test_unix_tm_to_iso_string seconds expected () =
   let timestamp = Unix.gmtime seconds in
   let time_str = Rrt.Stopwatch.unix_tm_to_iso_string timestamp in
@@ -17,6 +27,11 @@ let test_calculate_timestamp_diff start finish expected () =
 let config_tests =
   [
     (*"can deserialize JSON to config", `Quick, test_get_config*)
+    "can process GitHub URL",
+    `Quick,
+    test_get_repository_type
+      "https://github.com/MichalMoudry/release-report-tool"
+      Rrt.Config.GitHub
   ]
 
 (** A test suite with test cases for `unix_tm_to_string` function. *)

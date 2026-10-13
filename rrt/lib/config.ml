@@ -1,4 +1,10 @@
-type repository = GitHub | AzDevOps
+type repository_type = GitHub
+
+let get_repository_type url =
+  if String.includes ~affix:"github" url then
+    GitHub
+  else
+    failwith "Unable to detect a repository type from URL"
 
 type config = {
   url : string;

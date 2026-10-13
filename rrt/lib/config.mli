@@ -7,7 +7,17 @@ A module containing types and functions for handling this tool's configuration.
 An enum containing supported repositories for the release report.
 @author Michal Moudrý
 *)
-type repository = GitHub | AzDevOps
+type repository_type = GitHub
+
+(**
+A function for processing a URL and trying to detect a {!repository_type} from
+it.
+@param url The URL that should be processed.
+@return The {!repository_type} that was detected from the URL.
+@raise Failure If the function isn't able to detect any repository from the URL.
+@author Michal Moudrý
+*)
+val get_repository_type : string -> repository_type
 
 (** A structure containing tool's configuration data @author Michal Moudrý *)
 type config = {
