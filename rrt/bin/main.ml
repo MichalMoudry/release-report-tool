@@ -29,8 +29,7 @@ let generate_report config_path format =
   else
     try
       let sw = Rrt.Stopwatch.start_new () in
-      let config =
-        Rrt.File.read config_path
+      let config = Rrt.File.read config_path
         |> List.fold_left (^) ""
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;

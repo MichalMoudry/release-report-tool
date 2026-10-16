@@ -3,6 +3,29 @@ let test_get_config () =
   let config = Rrt.Config.get_config json in
   Alcotest.(check string) "is URL equal" "http://localhost" config.url
 
+(**
+A test case that asserts that the {!Rrt.Config.get_repository_type} correctly
+converts strings to an internal repository representation.
+@author Michal Moudrý
+*)
+let test_get_repository_type url expected () =
+  let repository_type = Rrt.Config.get_repository_type url in
+  let msg = "URL " ^ url ^ " couldn't be processed to a correct type" in
+  Alcotest.(check bool) msg true (expected = repository_type)
+
+(**
+A test case that checks if the {!Rrt.Config.get_repository_type} function
+correctly throws when an invalid URL is provided.
+@author Michal Moudrý
+*)
+let test_get_repository_type_throwing url () =
+  let res = try Some (Rrt.Config.get_repository_type url) with e -> None in
+  let msg = match res with
+    | Some value -> "Invalid URL was somehow correctly processed, got "
+      ^ (Rrt.Config.repository_type_to_str value)
+    | _ -> "" in
+  Alcotest.(check bool) msg true (Option.is_none res)
+
 let test_unix_tm_to_iso_string seconds expected () =
   let timestamp = Unix.gmtime seconds in
   let time_str = Rrt.Stopwatch.unix_tm_to_iso_string timestamp in
@@ -17,6 +40,20 @@ let test_calculate_timestamp_diff start finish expected () =
 let config_tests =
   [
     (*"can deserialize JSON to config", `Quick, test_get_config*)
+
+    "can process GitHub URL",
+    `Quick,
+    test_get_repository_type
+      "https://github.com/MichalMoudry/release-report-tool"
+      Rrt.Config.GitHub;
+
+    "correctly throws when processing invalid repo URL",
+    `Quick,
+    test_get_repository_type_throwing "http://localhost";
+
+    "correctly throws when processing an empty string as a repo URL",
+    `Quick,
+    test_get_repository_type_throwing ""
   ]
 
 (** A test suite with test cases for `unix_tm_to_string` function. *)
