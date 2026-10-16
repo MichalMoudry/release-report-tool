@@ -5,11 +5,9 @@ Reads all lines from an input channel.
 @author Michal Moudrý
 *)
 let read_all_lines channel =
-  let rec loop acc =
-    let line = try Some (input_line channel) with End_of_file -> None in
-    match line with
-    | Some str -> loop (str :: acc)
-    | None -> acc in
+  let rec loop lst = match input_line channel with
+  | exception End_of_file -> lst
+  | line -> loop (line :: lst) in
   loop [] |> List.rev
 
 let read path =

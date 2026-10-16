@@ -32,6 +32,23 @@ let validate_member fieldName opt =
   | None -> failwith ("'" ^ fieldName ^ "' is empty")
 
 (**
+A function that "overrides" a provided access token with a value from an
+environment variable.
+@param token An optional access token.
+@return If "ACCESS_TOKEN" environment variable is set, then it's returned;
+otherwise, token argument is returned.
+@author Michal Moudrý
+*)
+let set_access_token token =
+  let token_from_env = Sys.getenv_opt "ACCESS_TOKEN" in
+  if Option.is_some token_from_env then
+    token_from_env
+  else
+    match token with
+    | Some value -> if value = "" then None else token
+    | None -> None
+
+(**
 A function for setting a {!repository_type} to a {!config} record.
 @param cfg An instance of the {!config} record.
 @author Michal Moudrý
@@ -50,7 +67,10 @@ let new_config json =
   {
     url = json |> member "url" |> to_string_option |> validate_member "url";
     repo_type = None;
-    access_token = json |> member "accessToken" |> to_string_option;
+    access_token = json
+      |> member "accessToken"
+      |> to_string_option
+      |> set_access_token;
     environment = json |> member "environment" |> to_string_option;
     start_date = json
       |> member "startDate"
