@@ -22,6 +22,9 @@ let anon_func value = print_endline ("Received invalid input: " ^ value)
 (**
 A function for generating a release report based on a provided configuration
 and a format.
+@param config_path A path to a configuration file.
+@param format A target format that the report should be generated in.
+@author Michal Moudrý
 *)
 let generate_report config_path format =
   if config_path = "" then
@@ -33,12 +36,16 @@ let generate_report config_path format =
         |> List.fold_left (^) ""
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
+
+      let report_result = Rrt.Report.create config format in
       let elapsed = Rrt.Stopwatch.stop sw in
-      Ok (
-        Format.sprintf "Release report was generated successfully! Took: %.0fs"
-        elapsed
-      )
-    with e -> Error ("failed to generate the report -> " ^ Printexc.to_string e)
+      match report_result with
+      | Ok value -> Ok (
+          Format.sprintf "Release report was generated successfully! Took: %.0fs"
+          elapsed
+        )
+      | Error message -> Error (Rrt.Report.create_err_message message)
+    with e -> Error (Rrt.Report.create_err_message (Printexc.to_string e))
 
 let () =
   let usage_msg = "rrt -c <config> -f [Console|HTML]" in
