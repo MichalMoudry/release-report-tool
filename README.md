@@ -1,5 +1,6 @@
 # release-report-tool
 A command-line tool for generating reports about project's releases.
+
 ## Usage
 ```shell
 rrt -c <config> -f [Console|HTML]
@@ -31,3 +32,6 @@ This section contains details fields used within the configuration file.
     "numberOfMonths": 0
 }
 ```
+
+## System dependencies
+- cURL

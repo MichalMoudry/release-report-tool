@@ -19,4 +19,4 @@ A function for creating an error message related to a creation of the release re
 *)
 val create_err_message : string -> string
 
-val create : Config.config -> format -> (unit, string) result
+val create : Rrt.Config.config -> format -> (unit, string) result

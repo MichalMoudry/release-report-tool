@@ -32,26 +32,26 @@ let generate_report config_path format =
   else
     try
       let sw = Rrt.Stopwatch.start_new () in
-      let config = Rrt.File.read config_path
+      let config = File.read config_path
         |> List.fold_left (^) ""
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
 
-      let report_result = Rrt.Report.create config format in
+      let report_result = Report.create config format in
       let elapsed = Rrt.Stopwatch.stop sw in
       match report_result with
       | Ok value -> Ok (
           Format.sprintf "Release report was generated successfully! Took: %.0fs"
           elapsed
         )
-      | Error message -> Error (Rrt.Report.create_err_message message)
-    with e -> Error (Rrt.Report.create_err_message (Printexc.to_string e))
+      | Error message -> Error (Report.create_err_message message)
+    with e -> Error (Report.create_err_message (Printexc.to_string e))
 
 let () =
   let usage_msg = "rrt -c <config> -f [Console|HTML]" in
   Arg.parse spec_list anon_func usage_msg;
 
-  let format = Rrt.Report.get_format !format_argument in
+  let format = Report.get_format !format_argument in
   match generate_report !config_path format with
   | Ok message -> print_endline message
   | Error message -> prerr_endline ("Error: " ^ message); exit 1
