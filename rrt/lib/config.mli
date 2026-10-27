@@ -27,7 +27,14 @@ A function that converts a {!repository_type} to a string representation.
 val repository_type_to_str : repository_type -> string
 
 (** A structure containing tool's configuration data @author Michal Moudrý *)
-type config
+type config = {
+  url : string;
+  repo_type : repository_type option;
+  access_token : string option;
+  environment : string option;
+  start_date : Time.dateonly;
+  number_of_months : int
+}
 
 (**
 Retrieves configuration information from a file.

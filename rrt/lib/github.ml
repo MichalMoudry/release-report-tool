@@ -9,7 +9,7 @@ type release_data = {
     name : string option;
     body : string option;
     tag_name : string;
-    created_at : string;
-    updated_at : string option;
+    created_at : string; (* TODO: refactor to use actual date time record *)
+    updated_at : string option; (* TODO: refactor to use actual date time record *)
     author : release_author
 }
