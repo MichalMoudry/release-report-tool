@@ -1,7 +1,7 @@
 {
-    "url": "https://github.com/MichalMoudry/release-report-tool",
+    "url": "https://github.com/blowdart/idunno.Authentication",
     "accessToken": "",
-    "environment": "main",
-    "startDate": "2026-10-6",
-    "numberOfMonths": 12
+    "environment": "release",
+    "startDate": "2026-01-01",
+    "numberOfMonths": 6
 }

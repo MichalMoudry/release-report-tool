@@ -4,32 +4,39 @@ A module containing types and functions for handling this tool's configuration.
 *)
 
 (**
-An enum containing supported repositories for the release report.
+A module providing types and functions related to a repository that the release
+report should be generated for.
 @author Michal Moudrý
 *)
-type repository_type = GitHub
+module Repository : sig
+  type t = GitHub
+  (**
+  An enum containing supported repositories for the release report.
+  @author Michal Moudrý
+  *)
 
-(**
-A function for processing a URL and trying to detect a {!repository_type} from
-it.
-@param url The URL that should be processed.
-@return The {!repository_type} that was detected from the URL.
-@raise Failure If the function isn't able to detect any repository from the URL.
-@author Michal Moudrý
-*)
-val get_repository_type : string -> repository_type
+  val get_type : string -> t
+  (**
+  A function for processing a URL and trying to detect a {!t} from
+  it.
+  @param url The URL that should be processed.
+  @return The {!t} that was detected from the URL.
+  @raise Failure If the function isn't able to detect any repository from the URL.
+  @author Michal Moudrý
+  *)
 
-(**
-A function that converts a {!repository_type} to a string representation.
-@param repo A type of repository.
-@author Michal Moudrý
-*)
-val repository_type_to_str : repository_type -> string
+  val type_to_string : t -> string
+  (**
+  A function that converts a {!t} to a string representation.
+  @param repo A type of repository.
+  @author Michal Moudrý
+  *)
+end
 
 (** A structure containing tool's configuration data @author Michal Moudrý *)
 type config = {
   url : string;
-  repo_type : repository_type option;
+  repo_type : Repository.t option;
   access_token : string option;
   environment : string option;
   start_date : Time.dateonly;

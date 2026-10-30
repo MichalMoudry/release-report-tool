@@ -1,3 +1,5 @@
+module Client = Rrt.Http.MakeClient(Rrt.Http.CurlyClient)
+
 (** A path to a config file *)
 let config_path = ref ""
 let format_argument = ref ""
@@ -37,7 +39,7 @@ let generate_report config_path format =
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
 
-      let report_result = Report.create config format in
+      let report_result = Report.create config format Client.get in
       let elapsed = Rrt.Stopwatch.stop sw in
       match report_result with
       | Ok value -> Ok (

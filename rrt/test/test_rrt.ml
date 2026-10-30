@@ -9,7 +9,7 @@ converts strings to an internal repository representation.
 @author Michal Moudrý
 *)
 let test_get_repository_type url expected () =
-  let repository_type = Rrt.Config.get_repository_type url in
+  let repository_type = Rrt.Config.Repository.get_type url in
   let msg = "URL " ^ url ^ " couldn't be processed to a correct type" in
   Alcotest.(check bool) msg true (expected = repository_type)
 
@@ -19,10 +19,10 @@ correctly throws when an invalid URL is provided.
 @author Michal Moudrý
 *)
 let test_get_repository_type_throwing url () =
-  let res = try Some (Rrt.Config.get_repository_type url) with e -> None in
+  let res = try Some (Rrt.Config.Repository.get_type url) with e -> None in
   let msg = match res with
     | Some value -> "Invalid URL was somehow correctly processed, got "
-      ^ (Rrt.Config.repository_type_to_str value)
+      ^ (Rrt.Config.Repository.type_to_string value)
     | _ -> "" in
   Alcotest.(check bool) msg true (Option.is_none res)
 
@@ -45,7 +45,7 @@ let config_tests =
     `Quick,
     test_get_repository_type
       "https://github.com/MichalMoudry/release-report-tool"
-      Rrt.Config.GitHub;
+      Rrt.Config.Repository.GitHub;
 
     "correctly throws when processing invalid repo URL",
     `Quick,

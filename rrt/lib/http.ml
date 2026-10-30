@@ -8,11 +8,6 @@ module type Client =
     val get : string -> (string, string) result
   end
 
-(*module type ClientSig =
-  sig
-    val get : string -> (string, string) result
-  end*)
-
 module MakeClient(Dep : Client) =
   struct
     let get = Dep.get
