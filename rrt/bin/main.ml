@@ -1,3 +1,5 @@
+module Client = Rrt.Http.MakeClient(Rrt.Http.CurlyClient)
+
 (** A path to a config file *)
 let config_path = ref ""
 let format_argument = ref ""
@@ -22,6 +24,9 @@ let anon_func value = print_endline ("Received invalid input: " ^ value)
 (**
 A function for generating a release report based on a provided configuration
 and a format.
+@param config_path A path to a configuration file.
+@param format A target format that the report should be generated in.
+@author Michal Moudrý
 *)
 let generate_report config_path format =
   if config_path = "" then
@@ -29,22 +34,26 @@ let generate_report config_path format =
   else
     try
       let sw = Rrt.Stopwatch.start_new () in
-      let config = Rrt.File.read config_path
+      let config = File.read config_path
         |> List.fold_left (^) ""
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
+
+      let fetch = Client.get ~headers:[] in
+      let report_result = Report.create config format fetch in
       let elapsed = Rrt.Stopwatch.stop sw in
-      Ok (
-        Format.sprintf "Release report was generated successfully! Took: %.0fs"
-        elapsed
-      )
-    with e -> Error ("failed to generate the report -> " ^ Printexc.to_string e)
+      match report_result with
+      | Ok value -> Ok (
+          Format.sprintf "Release report was generated successfully! Took: %.0fs"
+          elapsed
+        )
+      | Error message -> Error (Report.create_err_message message)
+    with e -> Error (Report.create_err_message (Printexc.to_string e))
 
 let () =
-  let usage_msg = "rrt -c <config> -f [Console|HTML]" in
-  Arg.parse spec_list anon_func usage_msg;
+  Arg.parse spec_list anon_func "rrt -c <config> -f [Console|HTML]";
 
-  let format = Rrt.Report.get_format !format_argument in
+  let format = Report.get_format !format_argument in
   match generate_report !config_path format with
   | Ok message -> print_endline message
   | Error message -> prerr_endline ("Error: " ^ message); exit 1
