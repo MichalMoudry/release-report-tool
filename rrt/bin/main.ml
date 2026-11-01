@@ -39,7 +39,8 @@ let generate_report config_path format =
         |> Rrt.Config.get_config in
       Rrt.Config.pp_config config;
 
-      let report_result = Report.create config format Client.get in
+      let fetch = Client.get ~headers:[] in
+      let report_result = Report.create config format fetch in
       let elapsed = Rrt.Stopwatch.stop sw in
       match report_result with
       | Ok value -> Ok (
@@ -50,8 +51,7 @@ let generate_report config_path format =
     with e -> Error (Report.create_err_message (Printexc.to_string e))
 
 let () =
-  let usage_msg = "rrt -c <config> -f [Console|HTML]" in
-  Arg.parse spec_list anon_func usage_msg;
+  Arg.parse spec_list anon_func "rrt -c <config> -f [Console|HTML]";
 
   let format = Report.get_format !format_argument in
   match generate_report !config_path format with

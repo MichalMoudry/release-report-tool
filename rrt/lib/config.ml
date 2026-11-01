@@ -1,17 +1,3 @@
-module Repository = struct
-  type t = GitHub
-
-  let get_type url =
-    if String.includes ~affix:"github" url then
-      GitHub
-    else
-      failwith "Unable to detect a repository type from URL"
-
-  let type_to_string repo =
-    match repo with
-    | GitHub -> "GitHub"
-end
-
 type config = {
   url : string;
   repo_type : Repository.t option;
@@ -57,7 +43,7 @@ A function for setting a {!repository_type} to a {!config} record.
 @author Michal Moudrý
 *)
 let set_repository_type cfg =
-  { cfg with repo_type = Some (Repository.get_type cfg.url) }
+  { cfg with repo_type = Some (Repository.from_url cfg.url) }
 
 (**
 Function for transforming a JSON object to an internal representation.
@@ -98,7 +84,7 @@ let pp_config cfg = Format.printf {|Configuration = [ @[
 ]|}
   cfg.url
   (match cfg.repo_type with
-    | Some value -> Repository.type_to_string value
+    | Some value -> Repository.to_string value
     | None -> "")
   (Option.is_some cfg.access_token)
   (match cfg.environment with | Some env -> env | None -> "")

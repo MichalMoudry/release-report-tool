@@ -5,7 +5,7 @@ A module containing utilities around HTTP protocol.
 
 module type Client =
   sig
-    val get : string -> (string, string) result
+    val get : string -> headers:(string * string) list -> (string, string) result
   end
 
 module MakeClient(Dep : Client) =
@@ -15,8 +15,9 @@ module MakeClient(Dep : Client) =
 
 module CurlyClient : Client =
   struct
-    let get url =
-      let result = Curly.(run (Request.make ~url ~meth:`GET ())) in
+    let get url ~headers:headers =
+      let result =
+        Curly.(run (Request.make ~url ~meth:`GET () ~headers:headers)) in
       match result with
       | Ok response -> Ok response.body
       | Error err -> match err with

@@ -13,3 +13,10 @@ type release_data = {
     updated_at : string option; (* TODO: refactor to use actual date time record *)
     author : release_author
 }
+
+let get_client_headers token = [
+  ("Accept", "application/vnd.github+json");
+  ("X-GitHub-Api-Version", "2026-03-10");
+  (*("User-Agent", "ReleaseReportTool");*)
+  ("Authorization", "Bearer " ^ token)
+]
