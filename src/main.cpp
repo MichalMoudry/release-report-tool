@@ -1,42 +1,15 @@
-#include <string>
 #include <print>
 
-enum ReportFormat {
-    Console = 'c',
-    Html = 'h'
-};
+#include "cmd_args.hpp"
 
-class CmdArgs final {
-private:
-    std::string m_config_path;
-    ReportFormat m_format;
+int main(int argc, char *argv[]) {
+  CmdArgs cmdArgs {argc, argv};
+  std::println("Parsed args: path = {}", cmdArgs.get_config_path());
 
-public:
-    std::string get_config_path() const noexcept {
-        return m_config_path;
-    }
+  if (cmdArgs.get_format() == Report::Format::Unknown) {
+    std::println("[Error] Unknown format");
+    return 1;
+  }
 
-    ReportFormat get_format() const noexcept {
-        return m_format;
-    }
-
-    void set_config_path() noexcept {
-
-    }
-
-    void set_format() noexcept {
-
-    }
-};
-
-int main(int argc, char* argv[]) {
-    auto args {CmdArgs{}};
-
-    for (auto i = 0; i < argc; i++) {
-        auto current {argv[i]};
-        
-        std::println("{}: {}", i, current);
-    }
-
-    return 0;
+  return 0;
 }
