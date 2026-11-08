@@ -32,6 +32,3 @@ This section contains details fields used within the configuration file.
     "numberOfMonths": 0
 }
 ```
-
-## System dependencies
-- cURL

@@ -1,12 +1,15 @@
 #ifndef _CMD_ARGS_H_
 #define _CMD_ARGS_H_
 
+#include <optional>
 #include <string>
+
 #include "report.hpp"
 
+// A class that holds required command-line arguments.
 class CmdArgs final {
 private:
-  std::string m_config_path;
+  std::optional<std::string> m_config_path;
   Report::Format m_format;
 
   void set_format(std::string input) noexcept {
@@ -27,18 +30,21 @@ public:
     for (int i = 0; i < argc; i++) {
       std::string current {std::string{argv[i]}};
 
-      bool is_not_last {i != argc};
-      if (current.compare("-c") && is_not_last) {
+      bool is_not_last {i != argc - 1};
+      if (current.compare("-c") == 0 && is_not_last) {
         m_config_path = argv[i + 1];
-      } else if (current.compare("-f")) {
+      } else if (current.compare("-f") && is_not_last) {
         set_format(argv[i + 1]);
       }
     }
   }
 
-  std::string get_config_path() const noexcept { return m_config_path; }
+  // Returns a path to config file that a user specified.
+  std::optional<std::string> get_config_path() const noexcept;
 
-  Report::Format get_format() const noexcept { return m_format; }
+  // Returns a format of the release report. This is specified by the user, and
+  // can be unknown.
+  Report::Format get_format() const noexcept;
 };
 
 #endif

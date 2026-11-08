@@ -7,6 +7,7 @@ add_executable(rrt)
 target_sources(rrt
     PRIVATE
         src/main.cpp
+        src/cmd_args.cpp
 )
 
 if(
