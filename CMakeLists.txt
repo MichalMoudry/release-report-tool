@@ -8,6 +8,7 @@ target_sources(rrt
     PRIVATE
         src/main.cpp
         src/cmd_args.cpp
+        src/config.cpp
 )
 
 if(
