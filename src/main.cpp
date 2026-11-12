@@ -3,8 +3,8 @@
 #include <print>
 
 #include "cmd_args.hpp"
-#include "../vendor/nlohmann_json_3_12_0/json.hpp"
 #include "config.hpp"
+#include "nlohmann/json.hpp"
 
 int main(int argc, char *argv[]) {
   CmdArgs cmdArgs {argc, argv};
@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
     std::println("[Error] Path to a config file is missing");
     return 1;
   }
-  std::println("Config file path = {}", config_file_path.value());
 
   if (cmdArgs.get_format() == Report::Format::Unknown) {
     std::println("[Error] Unknown format");
@@ -28,8 +27,14 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  auto json {nlohmann::json::parse(file_input)};
-  std::println("Config file content = {}", json.is_array());
+  nlohmann::json json;
+  try {
+    json = nlohmann::json::parse(file_input);
+  } catch (const nlohmann::json::parse_error& e) {
+    std::println("[Error] Failed to parse config file, reason: {}", e.what());
+    return 1;
+  }
+
   /*Config app_config {
     "url", // json["url"].get<std::string>(),
     "token", // json["accessToken"].get<std::string>(),
@@ -39,7 +44,7 @@ int main(int argc, char *argv[]) {
   };*/
 
   std::unique_ptr<Config> config {std::make_unique<Config>(
-    "url",
+    json["url"].get<std::string>(),
     "token",
     "env",
     "2026-01-01",

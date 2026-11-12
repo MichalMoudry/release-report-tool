@@ -32,7 +32,7 @@ struct std::formatter<Config> : std::formatter<std::string_view> {
     auto format(const Config& cfg, std::format_context& ctx) const {
         return std::formatter<std::string_view>::format(
             std::format(
-                "Config {{ url={}, start_date={} }}",
+                "Config {{ url = {}, start_date = {} }}",
                 cfg.get_url(),
                 cfg.get_start_date().tm_year
             ),
