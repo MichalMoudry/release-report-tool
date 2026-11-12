@@ -13,3 +13,11 @@ Config::Config(
     m_number_of_months{number_of_months} {
     std::get_time(&m_start_date, "");
 }
+
+std::string Config::get_url() const noexcept {
+    return m_url;
+}
+
+std::tm Config::get_start_date() const noexcept {
+    return m_start_date;
+}

@@ -1,9 +1,9 @@
 #include <fstream>
+#include <memory>
 #include <print>
-#include <string>
 
 #include "cmd_args.hpp"
-#include "../lib/nlohmann_json_3_12_0/json.hpp"
+#include "../vendor/nlohmann_json_3_12_0/json.hpp"
 #include "config.hpp"
 
 int main(int argc, char *argv[]) {
@@ -29,15 +29,23 @@ int main(int argc, char *argv[]) {
   }
 
   auto json {nlohmann::json::parse(file_input)};
-  std::println("Config file content = {}", json.dump());
-  // Maybe allocate to heap?
-  Config app_config {
-    json["url"].get<std::string>(),
-    json["accessToken"].get<std::string>(),
-    json["env"].get<std::string>(),
-    json["startDate"].get<std::string>(),
+  std::println("Config file content = {}", json.is_array());
+  /*Config app_config {
+    "url", // json["url"].get<std::string>(),
+    "token", // json["accessToken"].get<std::string>(),
+    "env", // json["env"].get<std::string>(),
+    "2026-01-01", // json["startDate"].get<std::string>(),
     0
-  };
+  };*/
+
+  std::unique_ptr<Config> config {std::make_unique<Config>(
+    "url",
+    "token",
+    "env",
+    "2026-01-01",
+    0
+  )};
+  std::println("{}", *config);
 
   file_input.close();
 

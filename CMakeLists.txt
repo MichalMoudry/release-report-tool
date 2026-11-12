@@ -3,6 +3,12 @@ project(ReleaseReportTool)
 set (CMAKE_CXX_STANDARD 23)
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(FetchContent)
+FetchContent_Declare(
+  json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+)
+FetchContent_MakeAvailable(json)
+
 add_executable(rrt)
 target_sources(rrt
     PRIVATE
@@ -10,6 +16,7 @@ target_sources(rrt
         src/cmd_args.cpp
         src/config.cpp
 )
+
 
 if(
   (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC") OR
