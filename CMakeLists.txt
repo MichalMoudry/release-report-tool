@@ -7,7 +7,10 @@ include(FetchContent)
 FetchContent_Declare(
   json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
 )
-FetchContent_MakeAvailable(json)
+FetchContent_Declare(
+  http URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.66.0.tar.gz
+)
+FetchContent_MakeAvailable(json http)
 
 add_executable(rrt)
 target_sources(rrt
@@ -15,6 +18,7 @@ target_sources(rrt
         src/main.cpp
         src/cmd_args.cpp
         src/config.cpp
+        src/repository.cpp
 )
 target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json)
 

@@ -1,10 +1,11 @@
+#include <exception>
 #include <fstream>
 #include <memory>
 #include <print>
+#include <nlohmann/json.hpp>
 
 #include "cmd_args.hpp"
 #include "config.hpp"
-#include "nlohmann/json.hpp"
 
 int main(int argc, char *argv[]) {
   CmdArgs cmdArgs {argc, argv};
@@ -27,32 +28,16 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  nlohmann::json json;
+  std::unique_ptr<Config::Config> config = nullptr;
   try {
-    json = nlohmann::json::parse(file_input);
-  } catch (const nlohmann::json::parse_error& e) {
-    std::println("[Error] Failed to parse config file, reason: {}", e.what());
+    config = Config::from_json(nlohmann::json::parse(file_input));
+  } catch (const std::exception& e) {
+    std::println("[Error] Failed to parse config, reason:\n{}", e.what());
+    file_input.close();
     return 1;
   }
-
-  /*Config app_config {
-    "url", // json["url"].get<std::string>(),
-    "token", // json["accessToken"].get<std::string>(),
-    "env", // json["env"].get<std::string>(),
-    "2026-01-01", // json["startDate"].get<std::string>(),
-    0
-  };*/
-
-  std::unique_ptr<Config> config {std::make_unique<Config>(
-    json["url"].get<std::string>(),
-    "token",
-    "env",
-    "2026-01-01",
-    0
-  )};
   std::println("{}", *config);
 
   file_input.close();
-
   return 0;
 }
