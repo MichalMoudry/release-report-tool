@@ -13,9 +13,9 @@ private:
   Report::Format m_format;
 
   void set_format(std::string input) noexcept {
-    if (input.compare("Console")) {
+    if (input.compare("Console") == 0) {
       m_format = Report::Format::Console;
-    } else if (input.compare("HTML")) {
+    } else if (input.compare("HTML") == 0) {
       m_format = Report::Format::Html;
     } else {
       m_format = Report::Format::Unknown;
@@ -42,8 +42,10 @@ public:
   // Returns a path to config file that a user specified.
   std::optional<std::string> get_config_path() const noexcept;
 
-  // Returns a format of the release report. This is specified by the user, and
-  // can be unknown.
+  /*
+  Returns a format of the release report. This is specified by the user, and
+  can be unknown.
+  */
   Report::Format get_format() const noexcept;
 };
 
