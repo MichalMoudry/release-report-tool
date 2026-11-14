@@ -16,11 +16,11 @@ add_executable(rrt)
 target_sources(rrt
     PRIVATE
         src/main.cpp
+        src/client.cpp
         src/config/cmd_args.cpp
         src/config/config.cpp
-        src/repository.cpp
-        src/client.cpp
-        src/github.cpp
+        src/repository/repository.cpp
+        src/repository/github.cpp
 )
 target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json httplib)
 
