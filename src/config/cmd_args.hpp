@@ -32,7 +32,7 @@ public:
 
       bool is_not_last {i != argc - 1};
       if (current.compare("-c") == 0 && is_not_last) {
-        m_config_path = argv[i + 1];
+        m_config_path = std::make_optional(argv[i + 1]);
       } else if (current.compare("-f") && is_not_last) {
         set_format(argv[i + 1]);
       }

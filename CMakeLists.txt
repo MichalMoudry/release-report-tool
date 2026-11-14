@@ -8,9 +8,9 @@ FetchContent_Declare(
   json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
 )
 FetchContent_Declare(
-  http URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.66.0.tar.gz
+  httplib URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.66.0.tar.gz
 )
-FetchContent_MakeAvailable(json http)
+FetchContent_MakeAvailable(json httplib)
 
 add_executable(rrt)
 target_sources(rrt
@@ -19,8 +19,10 @@ target_sources(rrt
         src/config/cmd_args.cpp
         src/config/config.cpp
         src/repository.cpp
+        src/client.cpp
+        src/github.cpp
 )
-target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json httplib)
 
 if(
   (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC") OR

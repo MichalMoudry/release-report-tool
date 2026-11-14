@@ -2,7 +2,7 @@
 #define _REPORT_H_
 
 namespace Report {
-    enum struct Format { Unknown = 0, Console = 'c', Html = 'h' };
+enum struct Format { Unknown = 0, Console = 'c', Html = 'h' };
 }
 
 #endif
