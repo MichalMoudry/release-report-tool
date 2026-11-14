@@ -2,7 +2,7 @@
 #define _CONFIG_H_
 
 #include "nlohmann/json_fwd.hpp"
-#include "repository.hpp"
+#include "../repository.hpp"
 
 #include <ctime>
 #include <format>

@@ -4,8 +4,8 @@
 #include <print>
 #include <nlohmann/json.hpp>
 
-#include "cmd_args.hpp"
-#include "config.hpp"
+#include "config/cmd_args.hpp"
+#include "config/config.hpp"
 
 int main(int argc, char *argv[]) {
   CmdArgs cmdArgs {argc, argv};

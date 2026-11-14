@@ -16,8 +16,8 @@ add_executable(rrt)
 target_sources(rrt
     PRIVATE
         src/main.cpp
-        src/cmd_args.cpp
-        src/config.cpp
+        src/config/cmd_args.cpp
+        src/config/config.cpp
         src/repository.cpp
 )
 target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json)

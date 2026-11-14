@@ -4,7 +4,7 @@
 #include <optional>
 #include <string>
 
-#include "report.hpp"
+#include "../report.hpp"
 
 // A class that holds required command-line arguments.
 class CmdArgs final {
