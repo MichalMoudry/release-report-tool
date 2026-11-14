@@ -13,8 +13,7 @@ Config::Config(
 ) : m_url{url},
     m_access_token{access_token},
     m_env{env},
-    m_number_of_months{number_of_months},
-    m_repo_type{Repository::from_url(url)} {
+    m_number_of_months{number_of_months} {
     std::get_time(&m_start_date, "");
 }
 
@@ -26,10 +25,6 @@ std::tm Config::get_start_date() const noexcept { return m_start_date; }
 
 u_int64_t Config::get_month_count() const noexcept {
   return m_number_of_months;
-}
-
-Repository::Type Config::get_type() const noexcept {
-  return m_repo_type;
 }
 
 std::unique_ptr<Config> from_json(const nlohmann::json& json) {

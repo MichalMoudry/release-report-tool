@@ -6,6 +6,7 @@
 
 #include "config/cmd_args.hpp"
 #include "config/config.hpp"
+#include "repository/repository.hpp"
 
 int main(int argc, char *argv[]) {
   CmdArgs cmdArgs {argc, argv};
@@ -37,6 +38,13 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   std::println("{}", *config);
+
+  Repository::Type repo_type {Repository::from_url(config->get_url())};
+  if (repo_type == Repository::Unknown) {
+    std::println("[Error] Couldn't detect a repository from URL");
+    file_input.close();
+    return 1;
+  }
 
   file_input.close();
   return 0;
