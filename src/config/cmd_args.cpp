@@ -5,13 +5,13 @@ CmdArgs::CmdArgs(int argc, char *argv[]) {
     std::string current {std::string{argv[i]}};
     bool is_not_last{i != argc - 1};
 
-    if (current.compare("-c") == 0 && is_not_last) {
+    if (current == "-c" && is_not_last) {
       m_config_path = std::make_optional(argv[i + 1]);
-    } else if (current.compare("-f") && is_not_last) {
+    } else if (current == "-f" && is_not_last) {
       std::string input {argv[i + 1]};
-      if (input.compare("Console") == 0) {
+      if (input == "Console") {
         m_format = Report::Format::Console;
-      } else if (input.compare("HTML") == 0) {
+      } else if (input == "HTML") {
         m_format = Report::Format::Html;
       } else {
         m_format = Report::Format::Unknown;

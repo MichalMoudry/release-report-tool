@@ -34,6 +34,8 @@ public:
   std::string get_env() const noexcept;
   std::tm get_start_date() const noexcept;
   u_int64_t get_month_count() const noexcept;
+
+  void pretty_print() const noexcept;
 };
 
 /*

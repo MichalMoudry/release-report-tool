@@ -27,6 +27,10 @@ u_int64_t Config::get_month_count() const noexcept {
   return m_number_of_months;
 }
 
+void Config::pretty_print() const noexcept {
+
+}
+
 std::unique_ptr<Config> from_json(const nlohmann::json& json) {
   return std::make_unique<Config>(
     json["url"].get<std::string>(),

@@ -13,8 +13,6 @@ private:
   Report::Format m_format;
 
 public:
-  CmdArgs() = default;
-
   // A constructor for initialising the class from program's own arguments.
   CmdArgs(int argc, char* argv[]);
 
