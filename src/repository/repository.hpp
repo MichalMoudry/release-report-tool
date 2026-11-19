@@ -2,6 +2,7 @@
 #define _REPOSITORY_H_
 
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include "../config/config.hpp"
@@ -16,7 +17,7 @@ enum Type { Unknown = 0, GitHub = 1 };
 /*
 A function for processing a URL and trying to detect a {!Type} from it.
 */
-Type from_url(std::string url) noexcept;
+Type from_url(std::string_view url) noexcept;
 
 std::string_view url_to_string(Type type) noexcept;
 

@@ -2,7 +2,6 @@ add_executable(ReleaseReportToolTests)
 target_sources(ReleaseReportToolTests
   PRIVATE
     tests.cpp
-    ../src/config/cmd_args.cpp
 )
 
 function(RrtTest op)

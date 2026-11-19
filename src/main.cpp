@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::println("[Info] Parsing configuration");
   std::unique_ptr<Config::Config> config = nullptr;
   try {
     config = Config::from_json(nlohmann::json::parse(file_input));
@@ -76,7 +75,6 @@ void generate_report(
   Repository::Type repo_type,
   Report::Format fmt,
   std::unique_ptr<Config::Config> cfg) {
-  while (!st.stop_requested()) {
-  
+  if (!st.stop_requested()) {
   }
 }
