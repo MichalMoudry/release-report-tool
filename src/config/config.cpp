@@ -7,6 +7,7 @@
 #include <string>
 
 namespace Config {
+
 Config::Config(
     std::string&& url,
     std::string access_token,
@@ -30,13 +31,28 @@ u_int64_t Config::get_month_count() const noexcept {
 }
 
 void Config::pretty_print() const noexcept {
-  std::cout << std::boolalpha << std::left;
-  std::cout << std::setw(23) << "| Configuration " << " |" << "\n";
-  std::cout << std::setw(23) << "| URL: " << m_url << " |\n";
-  std::cout << std::setw(23) << "| Is access token set: " << !m_access_token.empty() << " |\n";
-  std::cout << std::setw(23) << "| Environment: " << m_env << " |\n";
-  std::cout << std::setw(23) << "| Start date: " << m_start_date << " |\n";
-  std::cout << std::setw(23) << "| Number of months: " << m_number_of_months << " |\n";
+  auto separator = std::string(m_url.length() + 25, '-');
+  // TODO: maybe truncate URL (or any data for that matter), so that it doesn't
+  // exceed 80 column
+  std::cout << separator << '\n';
+  std::cout << "| " << std::setw(72) << std::left << "Configuration " << " |\n";
+  std::cout << separator << '\n';
+  std::cout
+    << "| " << std::setw(21) << "URL: "
+    << std::setw(51) << m_url << " |\n";
+  std::cout
+    << "| " << std::setw(21) << "Is access token set: "
+    << std::setw(51) << !m_access_token.empty() << " |\n";
+  std::cout
+    << "| " << std::setw(21) << "Environment: "
+    << std::setw(51) << m_env << " |\n";
+  std::cout
+    << "| " << std::setw(21) << "Start date: "
+    << std::setw(51) << m_start_date << " |\n";
+  std::cout
+    << "| " << std::setw(21) << "Number of months: "
+    << std::setw(51) << m_number_of_months << " |\n";
+  std::cout << separator << std::endl;
 }
 
 std::unique_ptr<Config> from_json(const nlohmann::json& json) {
@@ -48,4 +64,5 @@ std::unique_ptr<Config> from_json(const nlohmann::json& json) {
     json["numberOfMonths"].get<u_int64_t>()
   );
 }
+
 }

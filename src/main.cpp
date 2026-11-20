@@ -1,5 +1,7 @@
 #include <exception>
 #include <fstream>
+#include <functional>
+#include <future>
 #include <memory>
 #include <print>
 #include <nlohmann/json.hpp>
@@ -14,6 +16,7 @@
 
 void generate_report(
   std::stop_token st,
+  std::promise<Report::Result>& result_promise,
   Repository::Type repo_type,
   Report::Format fmt,
   std::unique_ptr<Config::Config> cfg
@@ -60,21 +63,29 @@ int main(int argc, char* argv[]) {
 
   file_input.close();
 
+  std::promise<Report::Result> report_result_promise;
+  auto rr_future {report_result_promise.get_future()};
   std::jthread report_thread {
     generate_report,
+    std::ref(report_result_promise),
     repo_type,
     report_format,
     std::move(config)
   };
+
+  rr_future.get();
+  std::println("Report finished");
 
   return 0;
 }
 
 void generate_report(
   std::stop_token st,
+  std::promise<Report::Result>& result_promise,
   Repository::Type repo_type,
   Report::Format fmt,
   std::unique_ptr<Config::Config> cfg) {
   if (!st.stop_requested()) {
+    result_promise.set_value(Report::Result::Undetermined);
   }
 }

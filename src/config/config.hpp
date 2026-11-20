@@ -5,7 +5,6 @@
 
 #include <chrono>
 #include <ctime>
-#include <format>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -38,6 +37,7 @@ public:
   instant get_start_date() const noexcept;
   u_int64_t get_month_count() const noexcept;
 
+  // Pretty prints the configuration object to console.
   void pretty_print() const noexcept;
 };
 
@@ -46,21 +46,5 @@ Uses JSON values as config values from a provided parsed JSON object.
 */
 std::unique_ptr<Config> from_json(const nlohmann::json &json);
 }
-
-template <>
-struct std::formatter<Config::Config> : std::formatter<std::string_view> {
-  auto format(const Config::Config &cfg, std::format_context &ctx) const {
-    return std::formatter<std::string_view>::format(
-      std::format(
-        "Config {{ url = {}, env = {}, start_date = {}, number_of_months = {} }}",
-        cfg.get_url(),
-        cfg.get_env(),
-        "",
-        cfg.get_month_count()
-      ),
-      ctx
-    );
-  }
-};
 
 #endif

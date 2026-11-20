@@ -3,7 +3,7 @@
 CmdArgs::CmdArgs(int argc, char *argv[]) {
   for (int i = 0; i < argc; i++) {
     std::string current {std::string{argv[i]}};
-    bool is_not_last{i != argc - 1};
+    bool is_not_last {i != argc - 1};
 
     if (current == "-c" && is_not_last) {
       m_config_path = std::make_optional(argv[i + 1]);
@@ -11,8 +11,6 @@ CmdArgs::CmdArgs(int argc, char *argv[]) {
       std::string input {argv[i + 1]};
       if (input == "Console") {
         m_format = Report::Format::Console;
-      } else if (input == "HTML") {
-        m_format = Report::Format::Html;
       } else {
         m_format = Report::Format::Unknown;
       }
