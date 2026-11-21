@@ -3,24 +3,36 @@ project(ReleaseReportTool)
 set (CMAKE_CXX_STANDARD 23)
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+option(BUILD_TESTING "Enable testing and build tests" ON)
+if(BUILD_TESTING)
+  enable_testing()
+  add_subdirectory(test)
+endif()
+
 include(FetchContent)
 FetchContent_Declare(
   json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+  DOWNLOAD_EXTRACT_TIMESTAMP NEW
 )
 FetchContent_Declare(
-  http URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.66.0.tar.gz
+  httplib URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.66.0.tar.gz
+  DOWNLOAD_EXTRACT_TIMESTAMP NEW
 )
-FetchContent_MakeAvailable(json http)
+FetchContent_MakeAvailable(json httplib)
 
 add_executable(rrt)
 target_sources(rrt
-    PRIVATE
-        src/main.cpp
-        src/cmd_args.cpp
-        src/config.cpp
-        src/repository.cpp
+  PRIVATE
+    src/main.cpp
+    src/report.cpp
+    src/client.cpp
+    src/stopwatch.cpp
+    src/config/cmd_args.cpp
+    src/config/config.cpp
+    src/repository/repository.cpp
+    src/repository/github.cpp
 )
-target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json httplib)
 
 if(
   (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC") OR

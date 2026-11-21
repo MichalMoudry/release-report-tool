@@ -1,23 +1,40 @@
 #include <exception>
 #include <fstream>
+#include <functional>
+#include <future>
 #include <memory>
 #include <print>
 #include <nlohmann/json.hpp>
+#include <stop_token>
+#include <thread>
+#include <utility>
 
-#include "cmd_args.hpp"
-#include "config.hpp"
+#include "config/cmd_args.hpp"
+#include "config/config.hpp"
+#include "report.hpp"
+#include "repository/repository.hpp"
+#include "stopwatch.hpp"
 
-int main(int argc, char *argv[]) {
-  CmdArgs cmdArgs {argc, argv};
+void generate_report(
+  std::stop_token st,
+  std::promise<Report::Result>& result_promise,
+  Repository::Type repo_type,
+  Report::Format fmt,
+  std::unique_ptr<Config::Config> cfg
+);
 
-  auto config_file_path {cmdArgs.get_config_path()};
+int main(int argc, char* argv[]) {
+  CmdArgs args {argc, argv};
+
+  auto config_file_path {args.get_config_path()};
   // TODO: add config file path length validation
   if (!config_file_path.has_value()) {
     std::println("[Error] Path to a config file is missing");
     return 1;
   }
 
-  if (cmdArgs.get_format() == Report::Format::Unknown) {
+  Report::Format report_format {args.get_format()};
+  if (report_format == Report::Format::Unknown) {
     std::println("[Error] Unknown format");
     return 1;
   }
@@ -36,8 +53,44 @@ int main(int argc, char *argv[]) {
     file_input.close();
     return 1;
   }
-  std::println("{}", *config);
+  config->pretty_print();
+
+  Repository::Type repo_type {Repository::from_url(config->get_url())};
+  if (repo_type == Repository::Unknown) {
+    std::println("[Error] Couldn't detect a repository from URL");
+    file_input.close();
+    return 1;
+  }
 
   file_input.close();
+
+  std::promise<Report::Result> report_result_promise;
+  auto rr_future{report_result_promise.get_future()};
+
+  Stopwatch sw {Stopwatch::StartNew()};
+  std::println("Creating the report...");
+  std::jthread report_thread {
+    generate_report,
+    std::ref(report_result_promise),
+    repo_type,
+    report_format,
+    std::move(config)
+  };
+
+  rr_future.get();
+  sw.Stop();
+  std::println("Report finished, took: {}", sw.Elapsed());
+
   return 0;
+}
+
+void generate_report(
+  std::stop_token st,
+  std::promise<Report::Result>& result_promise,
+  Repository::Type repo_type,
+  Report::Format fmt,
+  std::unique_ptr<Config::Config> cfg) {
+  if (!st.stop_requested()) {
+    result_promise.set_value(Report::Result::Undetermined);
+  }
 }

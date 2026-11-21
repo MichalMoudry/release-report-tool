@@ -1,8 +1,7 @@
 #include "repository.hpp"
-#include <string_view>
 
 namespace Repository {
-Type from_url(std::string url) noexcept {
+Type from_url(std::string_view url) noexcept {
   if (url.contains("github")) {
     return GitHub;
   }
