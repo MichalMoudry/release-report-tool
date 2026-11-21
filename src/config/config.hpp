@@ -12,6 +12,9 @@
 using instant = std::chrono::time_point<std::chrono::system_clock>;
 
 namespace Config {
+
+const std::string_view Version {"0.0.1"};
+
 /*
 A class containing configuration data needed to generate a release report.
 */
@@ -26,9 +29,9 @@ private:
 public:
   Config(
     std::string&& url,
-    std::string access_token,
-    std::string env,
-    std::string start_date,
+    std::string&& access_token,
+    std::string&& env,
+    std::string&& start_date,
     unsigned long long number_of_months
   );
 

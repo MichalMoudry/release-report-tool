@@ -10,9 +10,9 @@ namespace Config {
 
 Config::Config(
     std::string&& url,
-    std::string access_token,
-    std::string env,
-    std::string start_date,
+    std::string&& access_token,
+    std::string&& env,
+    std::string&& start_date,
     u_int64_t number_of_months
 ) : m_url{url},
     m_access_token{access_token},
@@ -38,11 +38,15 @@ void Config::pretty_print() const noexcept {
   std::cout << "| " << std::setw(72) << std::left << "Configuration " << " |\n";
   std::cout << separator << '\n';
   std::cout
+    << "| " << std::setw(21) << "Tool version: "
+    << std::setw(51) << Version << " |\n";
+  std::cout
     << "| " << std::setw(21) << "URL: "
     << std::setw(51) << m_url << " |\n";
+  // TODO: switch to std::boolalpha
   std::cout
     << "| " << std::setw(21) << "Is access token set: "
-    << std::setw(51) << !m_access_token.empty() << " |\n";
+    << std::setw(51) << (m_access_token.empty() ? "false" : "true")  << " |\n";
   std::cout
     << "| " << std::setw(21) << "Environment: "
     << std::setw(51) << m_env << " |\n";

@@ -13,6 +13,7 @@
 #include "config/config.hpp"
 #include "report.hpp"
 #include "repository/repository.hpp"
+#include "stopwatch.hpp"
 
 void generate_report(
   std::stop_token st,
@@ -64,7 +65,10 @@ int main(int argc, char* argv[]) {
   file_input.close();
 
   std::promise<Report::Result> report_result_promise;
-  auto rr_future {report_result_promise.get_future()};
+  auto rr_future{report_result_promise.get_future()};
+
+  Stopwatch sw {Stopwatch::StartNew()};
+  std::println("Creating the report...");
   std::jthread report_thread {
     generate_report,
     std::ref(report_result_promise),
@@ -74,7 +78,8 @@ int main(int argc, char* argv[]) {
   };
 
   rr_future.get();
-  std::println("Report finished");
+  sw.Stop();
+  std::println("Report finished, took: {}", sw.Elapsed());
 
   return 0;
 }
