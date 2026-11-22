@@ -1,6 +1,9 @@
 #include "cmd_args.hpp"
 
-CmdArgs::CmdArgs(int argc, char *argv[]) {
+#include <optional>
+
+CmdArgs::CmdArgs(int argc, char *argv[])
+  : m_config_path{std::nullopt}, m_format{Report::Format::Unknown} {
   for (int i = 0; i < argc; i++) {
     std::string current {std::string{argv[i]}};
     bool is_not_last {i != argc - 1};
@@ -11,8 +14,6 @@ CmdArgs::CmdArgs(int argc, char *argv[]) {
       std::string input {argv[i + 1]};
       if (input == "Console") {
         m_format = Report::Format::Console;
-      } else {
-        m_format = Report::Format::Unknown;
       }
     }
   }

@@ -52,8 +52,8 @@ int test_args_parsing_with_zero_arg_count() noexcept {
   Report::Format format {args.get_format()};
   if (format != Report::Format::Unknown) {
     std::cerr
-      << "The report format should be unknown, got "
-      << format << std::endl;
+      << "The report format should be unknown, got value "
+      << static_cast<int>(format) << std::endl;
     return 1;
   }
 
