@@ -4,8 +4,12 @@
 // A test that checks if a valid set of arguments is correctly parsed.
 int test_correct_args_parsing() noexcept;
 
-// A test that checks how arguments are parsed when somehow the arg count
-// argument is zero.
+/*
+A test that checks how arguments are parsed when somehow the arg count argument
+is zero.
+*/
 int test_args_parsing_with_zero_arg_count() noexcept;
+
+int test_args_parse_with_partial_config_path() noexcept;
 
 #endif

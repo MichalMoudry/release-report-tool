@@ -13,3 +13,4 @@ endfunction()
 
 RrtTest(cmd_arg_parse_happy)
 RrtTest(test_args_parsing_with_zero_arg_count)
+RrtTest(test_args_parse_with_partial_config_path)

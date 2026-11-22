@@ -1,13 +1,10 @@
 #include <exception>
 #include <fstream>
-#include <functional>
 #include <future>
 #include <memory>
 #include <print>
 #include <nlohmann/json.hpp>
-#include <stop_token>
 #include <thread>
-#include <utility>
 
 #include "config/cmd_args.hpp"
 #include "config/config.hpp"
@@ -15,14 +12,6 @@
 #include "report.hpp"
 #include "repository/repository.hpp"
 #include "stopwatch.hpp"
-
-void generate_report(
-  std::stop_token st,
-  std::promise<Report::Result>& result_promise,
-  Repository::Type repo_type,
-  Report::Format fmt, 
-  std::unique_ptr<Config::Config> cfg
-);
 
 int main(int argc, char* argv[]) {
   CmdArgs args {argc, argv};
@@ -71,7 +60,7 @@ int main(int argc, char* argv[]) {
   Stopwatch sw {Stopwatch::StartNew()};
   std::println("Creating the report...");
   std::jthread report_thread {
-    generate_report,
+    Report::generate,
     std::ref(report_result_promise),
     repo_type,
     report_format,
@@ -83,15 +72,4 @@ int main(int argc, char* argv[]) {
   std::println("Report finished, took: {}", sw.Elapsed());
 
   return 0;
-}
-
-void generate_report(
-  std::stop_token st,
-  std::promise<Report::Result>& result_promise,
-  Repository::Type repo_type,
-  Report::Format fmt,
-  std::unique_ptr<Config::Config> cfg) {
-  if (!st.stop_requested()) {
-    result_promise.set_value(Report::Result::Undetermined);
-  }
 }

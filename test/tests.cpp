@@ -12,6 +12,8 @@ int main(int argc, char* argv[]) {
     return test_correct_args_parsing();
   } else if (test == "test_args_parsing_with_zero_arg_count") {
     return test_args_parsing_with_zero_arg_count();
+  } else if (test == "test_args_parse_with_partial_config_path") {
+    return test_args_parse_with_partial_config_path();
   }
   return 1;
 }

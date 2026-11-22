@@ -5,17 +5,17 @@
 
 // A test that checks if a valid set of arguments is correctly parsed.
 int test_correct_args_parsing() noexcept {
-  char config_flag[3] {"-c"};
-  char config_path[9] {"./config"};
+  char config_flag [] {"-c"};
+  char config_path [] {"./config"};
 
-  char format_flag[3] {"-f"};
-  char format[8] {"Console"};
+  char format_flag [] {"-f"};
+  char format [] {"Console"};
 
   char* values [] {config_flag, config_path, format_flag, format};
   CmdArgs args {4, values};
 
   auto actual_path {args.get_config_path()};
-  auto has_path {actual_path.has_value()};
+  bool has_path {actual_path.has_value()};
   if (!has_path || actual_path->compare(config_path) != 0) {
     std::cerr
       << "Config isn't set or has an invalid value. Expected: "
@@ -36,8 +36,8 @@ int test_correct_args_parsing() noexcept {
 }
 
 int test_args_parsing_with_zero_arg_count() noexcept {
-  char arg1[] {"-c"};
-  char arg2[] {"./config.json"};
+  char arg1 [] {"-c"};
+  char arg2 [] {"./config.json"};
   char* argv [] {arg1, arg2};
   CmdArgs args {0, argv};
 
@@ -57,5 +57,18 @@ int test_args_parsing_with_zero_arg_count() noexcept {
     return 1;
   }
 
+  return 0;
+}
+
+int test_args_parse_with_partial_config_path() noexcept {
+  char flag [] {"-f"};
+  char* argv [] {flag};
+  CmdArgs args {1, argv};
+
+  auto config_path {args.get_config_path()};
+  if (config_path.has_value()) {
+    std::cerr << "Config should be nullopt, but got " << config_path.value();
+    return 1;
+  }
   return 0;
 }
