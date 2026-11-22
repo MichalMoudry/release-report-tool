@@ -12,3 +12,4 @@ function(RrtTest op)
 endfunction()
 
 RrtTest(cmd_arg_parse_happy)
+RrtTest(test_args_parsing_with_zero_arg_count)
