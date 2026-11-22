@@ -2,8 +2,8 @@
   {
     "label": "Debug tool",
     "build": {
-      "command": "make",
-      "args": ["-c", "./config.json", "-f", "Console"],
+      "command": "cmake",
+      "args": ["--build", "build"],
       "cwd": "$ZED_WORKTREE_ROOT"
     },
     "program": "$ZED_WORKTREE_ROOT/src",

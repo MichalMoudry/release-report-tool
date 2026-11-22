@@ -19,7 +19,7 @@ void generate_report(
   std::stop_token st,
   std::promise<Report::Result>& result_promise,
   Repository::Type repo_type,
-  Report::Format fmt,
+  Report::Format fmt, 
   std::unique_ptr<Config::Config> cfg
 );
 

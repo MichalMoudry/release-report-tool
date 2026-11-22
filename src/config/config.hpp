@@ -47,7 +47,7 @@ public:
 /*
 Uses JSON values as config values from a provided parsed JSON object.
 */
-std::unique_ptr<Config> from_json(const nlohmann::json &json);
+std::unique_ptr<Config> from_json(const nlohmann::json& json);
 }
 
 #endif
