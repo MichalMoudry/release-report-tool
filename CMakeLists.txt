@@ -27,6 +27,7 @@ target_sources(rrt
     src/report.cpp
     src/client.cpp
     src/stopwatch.cpp
+    src/json.cpp
     src/config/cmd_args.cpp
     src/config/config.cpp
     src/repository/repository.cpp

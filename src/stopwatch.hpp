@@ -7,8 +7,8 @@
 // A class that keeps a track of time between two time points.
 class Stopwatch final {
 private:
-  std::optional<std::chrono::time_point<std::chrono::system_clock>> m_end;
-  std::chrono::time_point<std::chrono::system_clock> m_start;
+  std::optional<std::chrono::time_point<std::chrono::steady_clock>> m_end;
+  std::chrono::time_point<std::chrono::steady_clock> m_start;
   bool m_is_start_set;
 
 public:
