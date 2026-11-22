@@ -1,11 +1,8 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#include "nlohmann/json_fwd.hpp"
-
 #include <chrono>
 #include <ctime>
-#include <memory>
 #include <string>
 #include <string_view>
 
@@ -13,6 +10,7 @@ using instant = std::chrono::time_point<std::chrono::system_clock>;
 
 namespace Config {
 
+// App's current version.
 const std::string_view Version {"0.0.1"};
 
 /*
@@ -44,10 +42,6 @@ public:
   void pretty_print() const noexcept;
 };
 
-/*
-Uses JSON values as config values from a provided parsed JSON object.
-*/
-std::unique_ptr<Config> from_json(const nlohmann::json& json);
 }
 
 #endif

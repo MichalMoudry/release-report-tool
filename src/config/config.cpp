@@ -3,17 +3,16 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
-#include <nlohmann/json.hpp>
 #include <string>
 
 namespace Config {
 
 Config::Config(
-    std::string&& url,
-    std::string&& access_token,
-    std::string&& env,
-    std::string&& start_date,
-    u_int64_t number_of_months
+  std::string&& url,
+  std::string&& access_token,
+  std::string&& env,
+  std::string&& start_date,
+  u_int64_t number_of_months
 ) : m_url{url},
     m_access_token{access_token},
     m_env{env},
@@ -57,16 +56,6 @@ void Config::pretty_print() const noexcept {
     << "| " << std::setw(21) << "Number of months: "
     << std::setw(51) << m_number_of_months << " |\n";
   std::cout << separator << std::endl;
-}
-
-std::unique_ptr<Config> from_json(const nlohmann::json& json) {
-  return std::make_unique<Config>(
-    json["url"].get<std::string>(),
-    json["accessToken"].get<std::string>(),
-    json["environment"].get<std::string>(),
-    json["startDate"].get<std::string>(),
-    json["numberOfMonths"].get<u_int64_t>()
-  );
 }
 
 }

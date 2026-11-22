@@ -11,6 +11,7 @@
 
 #include "config/cmd_args.hpp"
 #include "config/config.hpp"
+#include "json.hpp"
 #include "report.hpp"
 #include "repository/repository.hpp"
 #include "stopwatch.hpp"
@@ -47,7 +48,7 @@ int main(int argc, char* argv[]) {
 
   std::unique_ptr<Config::Config> config = nullptr;
   try {
-    config = Config::from_json(nlohmann::json::parse(file_input));
+    config = Json::config_from_json(nlohmann::json::parse(file_input));
   } catch (const std::exception& e) {
     std::println("[Error] Failed to parse config, reason:\n{}", e.what());
     file_input.close();
