@@ -1,12 +1,14 @@
 #ifndef _GITHUB_H_
 #define _GITHUB_H_
 
+#include "repository.hpp"
 #include <chrono>
 #include <optional>
 #include <string>
 #include <unordered_map>
 
 namespace GitHub {
+
 struct ReleaseAuthor {
   std::optional<std::string> email;
   std::string name;
@@ -27,6 +29,11 @@ Returns a map of HTTP request headers needed to send requests to GitHub's API.
 */
 std::unordered_map<std::string, std::string>
 get_client_headers(std::string token) noexcept;
+
+class GitHubDataFetcher : public Repository::DataFetcher {
+  
+};
+
 }
 
 #endif

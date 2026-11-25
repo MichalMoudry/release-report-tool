@@ -8,6 +8,7 @@
 #include "../config/config.hpp"
 
 namespace Repository {
+
 /*
 An enum containing supported repositories for the release report.
 @author Michal Moudrý
@@ -33,11 +34,12 @@ An interface for a class that's responsible for fetching a collection of
 release information.
 */
 class DataFetcher {
-  public:
+public:
   virtual std::vector<ReleaseData> get_release_data(
     const Config::Config& cfg
   ) = 0;
 };
+
 }
 
 #endif
