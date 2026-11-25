@@ -1,8 +1,12 @@
 #include "config.hpp"
 
+#include <chrono>
+#include <ctime>
 #include <iomanip>
 #include <ios>
 #include <iostream>
+#include <locale>
+#include <sstream>
 #include <string>
 
 namespace Config {
@@ -17,6 +21,11 @@ Config::Config(
     m_access_token{access_token},
     m_env{env},
     m_number_of_months{number_of_months} {
+  std::tm t {};
+  std::istringstream iss {start_date};
+  iss.imbue(std::locale());
+  iss >> std::get_time(&t, "%Y-%m-%d");
+  m_start_date = std::chrono::system_clock::from_time_t(std::mktime(&t));
 }
 
 std::string_view Config::get_url() const noexcept { return m_url; }

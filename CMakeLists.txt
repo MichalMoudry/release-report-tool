@@ -20,20 +20,33 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(json httplib)
 
+add_library(core)
+target_sources(core
+  PRIVATE
+    src/core/report.cpp
+    src/core/repository.cpp
+    src/core/github.cpp
+  PUBLIC
+    FILE_SET HEADERS
+    BASE_DIRS
+      src/core
+    FILES
+      src/core/report.hpp
+      src/core/repository.hpp
+      src/core/github.hpp
+)
+
 add_executable(rrt)
 target_sources(rrt
   PRIVATE
     src/main.cpp
-    src/report.cpp
     src/client.cpp
     src/stopwatch.cpp
     src/json.cpp
     src/config/cmd_args.cpp
     src/config/config.cpp
-    src/repository/repository.cpp
-    src/repository/github.cpp
 )
-target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json httplib)
+target_link_libraries(rrt PRIVATE nlohmann_json::nlohmann_json httplib core)
 
 if(
   (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC") OR

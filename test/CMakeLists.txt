@@ -1,7 +1,7 @@
 add_executable(ReleaseReportToolTests)
 target_sources(ReleaseReportToolTests
   PRIVATE
-    ../src/report.cpp
+    ../src/core/report.cpp
     ../src/config/cmd_args.cpp
     cmd_args_tests.cpp
     tests.cpp

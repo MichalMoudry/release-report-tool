@@ -1,8 +1,8 @@
 #ifndef _REPORT_H_
 #define _REPORT_H_
 
-#include "config/config.hpp"
-#include "repository/repository.hpp"
+#include "../config/config.hpp"
+#include "repository.hpp"
 #include <future>
 #include <iostream>
 #include <memory>

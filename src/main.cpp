@@ -10,7 +10,7 @@
 #include "config/config.hpp"
 #include "json.hpp"
 #include "report.hpp"
-#include "repository/repository.hpp"
+#include "core/repository.hpp"
 #include "stopwatch.hpp"
 
 int main(int argc, char* argv[]) {

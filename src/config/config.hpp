@@ -40,6 +40,7 @@ public:
 
   // Pretty prints the configuration object to console.
   void pretty_print() const noexcept;
+
 };
 
 }
