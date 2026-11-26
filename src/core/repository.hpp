@@ -1,6 +1,8 @@
 #ifndef _REPOSITORY_H_
 #define _REPOSITORY_H_
 
+#include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -33,12 +35,17 @@ struct ReleaseData final {
 An interface for a class that's responsible for fetching a collection of
 release information.
 */
-class DataFetcher {
+class IDataProvider {
 public:
+  virtual ~IDataProvider() {};
   virtual std::vector<ReleaseData> get_release_data(
     const Config::Config& cfg
-  ) = 0;
+  ) const = 0;
 };
+
+std::optional<std::unique_ptr<IDataProvider>> construct_data_provider(
+  Type repo_type
+) noexcept;
 
 }
 

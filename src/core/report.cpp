@@ -1,4 +1,7 @@
 #include "report.hpp"
+#include "repository.hpp"
+
+#include <memory>
 
 namespace Report {
 
@@ -13,11 +16,19 @@ std::ostream& operator<<(std::ostream& os, Report::Format format) noexcept {
 void generate(
   std::stop_token st,
   std::promise<Result> &promise,
-  Repository::Type repo_type,
+  const Repository::IDataProvider& data_provider,
   Format fmt,
   std::unique_ptr<Config::Config> cfg) {
   if (!st.stop_requested()) {
-    promise.set_value(Report::Result::Undetermined);
+    /*switch (repo_type) {
+      case Repository::GitHub:
+        GitHub::GitHubDataFetcher{}.get_release_data(*cfg);
+        break;
+      case Repository::Unknown:
+        promise.set_value(Report::Result::Undetermined);
+        break;
+    }*/
+    auto release_data {data_provider.get_release_data(*cfg)};
   }
 }
 

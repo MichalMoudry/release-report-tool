@@ -1,4 +1,7 @@
 #include "repository.hpp"
+#include "github.hpp"
+#include <memory>
+#include <optional>
 
 namespace Repository {
 
@@ -15,6 +18,16 @@ std::string_view url_to_string(Type type) noexcept {
     return "GitHub";
   case Unknown:
     return "Unknown";
+  }
+}
+
+std::optional<std::unique_ptr<IDataProvider>> construct_data_provider(
+  Type repo_type) noexcept {
+  switch (repo_type) {
+    case GitHub:
+      return std::make_unique<GitHub::GitHubDataFetcher>();
+    case Unknown:
+      return std::nullopt;
   }
 }
 
